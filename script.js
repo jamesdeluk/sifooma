@@ -34,8 +34,10 @@ function addItem(listId, inputId) {
         deleteButton.className = 'delete';
         deleteButton.textContent = "Delete";
         deleteButton.onclick = () => {
-            list.removeChild(listItem);
-            updateStorage();
+            if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
+                list.removeChild(listItem);
+                updateStorage();
+            }
         };
         buttonsDiv.appendChild(deleteButton);
 
@@ -80,8 +82,10 @@ function transferItem(currentListId, listItem) {
 
         const deleteButton = listItem.getElementsByClassName('delete')[0];
         deleteButton.onclick = () => {
-            listItem.parentNode.removeChild(listItem);
-            updateStorage();
+            if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
+                listItem.parentNode.removeChild(listItem);
+                updateStorage();
+            }
         };
 
         const editButton = listItem.getElementsByClassName('edit')[0];
@@ -175,8 +179,10 @@ function loadFromStorage() {
             deleteButton.className = 'delete';
             deleteButton.textContent = "Delete";
             deleteButton.onclick = () => {
-                list.removeChild(listItem);
-                updateStorage();
+                if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
+                    list.removeChild(listItem);
+                    updateStorage();
+                }
             };
             buttonsDiv.appendChild(deleteButton);
 
