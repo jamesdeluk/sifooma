@@ -8,10 +8,6 @@ body {
     justify-content: space-around;
 }
 
-.column {
-    width: 30%;
-}
-
 h2 {
     text-align: center;
 }
@@ -35,7 +31,45 @@ button {
 }
 
 input {
-    width: 70%;
+    width: 85%;
     padding: 5px;
     margin: 10px 0;
+}
+
+.tab-content {
+    display: inline-block;
+    width: 30%;
+    height: 100%;
+    vertical-align: top;
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.tabs {
+    display: none; /* Hide tabs by default */
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        display: flex; /* Show tabs on mobile */
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content:first-of-type {
+        display: block;
+    }
+
+    .tab-content {
+        width: 100%;
+    }
+
+    input {
+        width: 80%;
+    }
 }

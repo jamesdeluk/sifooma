@@ -12,29 +12,32 @@ function addItem(listId, inputId) {
 
         if (!itemExists) {
             const listItem = document.createElement('li');
-            listItem.innerHTML = `${itemName} <span>${timestamp}</span>`;
+            listItem.innerHTML = `<span>${timestamp}</span> ${itemName}`;
             
-            // Create buttons for delete and transfer
             const deleteButton = document.createElement('button');
             deleteButton.textContent = "Delete";
             deleteButton.onclick = () => {
                 list.removeChild(listItem);
-                updateStorage(); // Update storage after deletion
+                updateStorage();
             };
+            listItem.appendChild(deleteButton);
 
             const transferButton = document.createElement('button');
-            transferButton.textContent = "Transfer";
+            if (listId == 'shopping-list') {
+                transferButton.textContent = "Bought";
+            }
+            else if (listId == 'pantry-list') {
+                transferButton.textContent = "Eaten";
+            }
             transferButton.onclick = () => transferItem(listId, listItem);
 
-            // Append buttons to the item
-            listItem.appendChild(deleteButton);
             listItem.appendChild(transferButton);
             
             list.appendChild(listItem);
             input.value = "";
 
-            // Save to localStorage
-            saveToStorage(listId, itemName, timestamp);
+            // saveToStorage(listId, itemName, timestamp);
+            updateStorage();
         } else {
             alert("Item already exists in the list.");
         }
@@ -53,56 +56,48 @@ function transferItem(currentListId, listItem) {
     if (targetListId) {
         const currentList = document.getElementById(currentListId);
         const targetList = document.getElementById(targetListId);
-        
-        // Clone the listItem to avoid removing the original from a different list
-        const clonedItem = listItem.cloneNode(true);
-        const itemName = clonedItem.childNodes[0].textContent;
-        const timestamp = getTimestamp();
-        clonedItem.querySelector('span').textContent = timestamp;
 
-        const deleteButton = clonedItem.querySelector('button:nth-child(2)');
+        const deleteButton = listItem.querySelector('button:nth-child(2)');
         deleteButton.onclick = () => {
-            clonedItem.parentNode.removeChild(clonedItem);
-            updateStorage(); // Update storage after deletion
+            listItem.parentNode.removeChild(listItem);
+            updateStorage();
         };
 
-        // // Remove transfer button if moving to the Food Diary
-        // if (targetListId === "diary-list") {
-        //     const transferButton = clonedItem.querySelector('button:nth-child(3)');
-        //     transferButton.parentNode.removeChild(transferButton);
-        // } else {
-        //     // Re-attach the transfer button's functionality to the cloned item for non-diary lists
-        //     clonedItem.querySelector('button:nth-child(3)').onclick = () => transferItem(targetListId, clonedItem);
-        // }
+        if (targetListId === "pantry-list") {
+            const transferButton = listItem.querySelector('button:nth-child(3)');
+            transferButton.textContent = "Eaten";
+        } else {
+            listItem.querySelector('button:nth-child(3)').onclick = () => transferItem(targetListId, listItem);
+        }
 
-        // Remove the original item from the current list
+        // Remove transfer button if moving to the Food Diary
+        if (targetListId === "diary-list") {
+            const transferButton = listItem.querySelector('button:nth-child(3)');
+            transferButton.parentNode.removeChild(transferButton);
+        } else {
+            listItem.querySelector('button:nth-child(3)').onclick = () => transferItem(targetListId, listItem);
+        }
+
         currentList.removeChild(listItem);
-        
-        // Append the cloned item to the target list
-        targetList.appendChild(clonedItem);
+        // targetList.appendChild(listItem);
+        targetList.insertBefore(listItem, targetList.firstChild);
 
-        // Remove the item from the current list's storage
-        removeFromStorage(currentListId, itemName);
-        
-        // Save to localStorage
-        saveToStorage(targetListId, itemName, timestamp);
-
+        updateStorage();
+        // removeFromStorage(currentListId, itemName);
+        // saveToStorage(targetListId, itemName, timestamp);
     }
-}
-
-// New function to remove an item from localStorage
-function removeFromStorage(listId, itemName) {
-    const items = JSON.parse(localStorage.getItem(listId)) || [];
-    const updatedItems = items.filter(item => item.name !== itemName);
-    localStorage.setItem(listId, JSON.stringify(updatedItems));
 }
 
 function getTimestamp() {
     const now = new Date();
-    return now.toLocaleString();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    // const hours = String(now.getHours()).padStart(2, '0');
+    // const minutes = String(now.getMinutes()).padStart(2, '0');
+    // return `${day}/${month} ${hours}:${minutes}`;
+    return `${day}/${month}`;
 }
 
-// Add event listeners to inputs for Ctrl + Enter functionality
 document.getElementById('shopping-input').addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 'Enter') {
         addItem('shopping-list', 'shopping-input');
@@ -121,14 +116,6 @@ document.getElementById('diary-input').addEventListener('keydown', function(e) {
     }
 });
 
-// New function to save items to localStorage
-function saveToStorage(listId, itemName, timestamp) {
-    const items = JSON.parse(localStorage.getItem(listId)) || [];
-    items.push({ name: itemName, date: timestamp });
-    localStorage.setItem(listId, JSON.stringify(items));
-}
-
-// New function to load items from localStorage
 function loadFromStorage() {
     const lists = ['shopping-list', 'pantry-list', 'diary-list'];
     lists.forEach(listId => {
@@ -136,43 +123,56 @@ function loadFromStorage() {
         const list = document.getElementById(listId);
         items.forEach(item => {
             const listItem = document.createElement('li');
-            listItem.innerHTML = `${item.name} <span>${item.date}</span>`;
-            // Create buttons for delete and transfer
+            listItem.innerHTML = `<span>${item.date}</span> ${item.name}`;
+
             const deleteButton = document.createElement('button');
             deleteButton.textContent = "Delete";
             deleteButton.onclick = () => {
                 list.removeChild(listItem);
-                updateStorage(); // Update storage after deletion
+                updateStorage();
             };
             listItem.appendChild(deleteButton);
+
             if (listId !== 'diary-list') {
                 const transferButton = document.createElement('button');
-                transferButton.textContent = "Transfer";
+                if (listId == 'shopping-list') {
+                    transferButton.textContent = "Bought";
+                }
+                else if (listId == 'pantry-list') {
+                    transferButton.textContent = "Eaten";
+                }
                 transferButton.onclick = () => transferItem(listId, listItem);
                 listItem.appendChild(transferButton);
             }
-            // Append buttons to the item
-            
-            
             list.appendChild(listItem);
         });
     });
 }
 
-// Call loadFromStorage on page load
-window.onload = loadFromStorage;
+// function saveToStorage(listId, itemName, timestamp) {
+//     const items = JSON.parse(localStorage.getItem(listId)) || [];
+//     items.push({ name: itemName, date: timestamp });
+//     localStorage.setItem(listId, JSON.stringify(items));
+// }
 
-// New function to update storage after changes
+// function removeFromStorage(listId, itemName) {
+//     const items = JSON.parse(localStorage.getItem(listId)) || [];
+//     const updatedItems = items.filter(item => item.name !== itemName);
+//     localStorage.setItem(listId, JSON.stringify(updatedItems));
+// }
+
 function updateStorage() {
     const lists = ['shopping-list', 'pantry-list', 'diary-list'];
     lists.forEach(listId => {
         const items = [];
         const list = document.getElementById(listId);
         list.childNodes.forEach(item => {
-            const name = item.childNodes[0].textContent;
             const date = item.querySelector('span').textContent;
+            const name = item.childNodes[1].textContent;
             items.push({ name, date });
         });
         localStorage.setItem(listId, JSON.stringify(items));
     });
 }
+
+window.onload = loadFromStorage;

@@ -7,31 +7,46 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="tabs">
+        <button class="tab-button" onclick="openTab('shopping')">Shopping List</button>
+        <button class="tab-button" onclick="openTab('pantry')">Pantry</button>
+        <button class="tab-button" onclick="openTab('diary')">Food Diary</button>
+    </div>
+
     <div class="container">
         <!-- Shopping List Column -->
-        <div class="column">
+        <div class="tab-content" id="shopping">
             <h2>Shopping List</h2>
-            <ul id="shopping-list"></ul>
             <input type="text" id="shopping-input" placeholder="Add new item" />
             <button onclick="addItem('shopping-list', 'shopping-input')">Add</button>
+            <ul id="shopping-list"></ul>
         </div>
 
         <!-- Pantry Column -->
-        <div class="column">
+        <div class="tab-content" id="pantry">
             <h2>Pantry</h2>
-            <ul id="pantry-list"></ul>
             <input type="text" id="pantry-input" placeholder="Add new item" />
             <button onclick="addItem('pantry-list', 'pantry-input')">Add</button>
+            <ul id="pantry-list"></ul>
         </div>
 
         <!-- Food Diary Column -->
-        <div class="column">
+        <div class="tab-content" id="diary">
             <h2>Food Diary</h2>
-            <ul id="diary-list"></ul>
             <input type="text" id="diary-input" placeholder="Add new item" />
             <button onclick="addItem('diary-list', 'diary-input')">Add</button>
+            <ul id="diary-list"></ul>
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.style.display = 'none'; // Hide all tabs
+            });
+            document.getElementById(tabName).style.display = 'block'; // Show the selected tab
+        }
+    </script>
 </body>
 </html>
