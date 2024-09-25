@@ -5,7 +5,7 @@ function addItem(listId, inputId) {
     if (input.value.trim() !== "") {
         const date = getDate();
         const time = getTime();
-        const itemName = input.value;
+        let itemName = input.value;
 
         const listItem = document.createElement('li');
         
@@ -17,6 +17,18 @@ function addItem(listId, inputId) {
         
         const buttonsDiv = document.createElement('div');
         buttonsDiv.className = 'buttons';
+
+        const editButton = document.createElement('button');
+        editButton.className = 'edit';
+        editButton.textContent = "Edit";
+        editButton.onclick = () => {
+            var newName = prompt("New name?", itemName)
+            if (newName !== null) {
+                listItem.getElementsByClassName("name")[0].textContent = newName;
+                updateStorage();
+            }
+        };
+        buttonsDiv.appendChild(editButton);
 
         const deleteButton = document.createElement('button');
         deleteButton.className = 'delete';
@@ -70,6 +82,15 @@ function transferItem(currentListId, listItem) {
         deleteButton.onclick = () => {
             listItem.parentNode.removeChild(listItem);
             updateStorage();
+        };
+
+        const editButton = listItem.getElementsByClassName('edit')[0];
+        editButton.onclick = () => {
+            var newName = prompt("New name?", listItem.getElementsByClassName("name")[0].textContent)
+            if (newName !== null) {
+                listItem.getElementsByClassName("name")[0].textContent = newName;
+                updateStorage();
+            }
         };
 
         if (targetListId === "pantry-list") {
@@ -137,6 +158,18 @@ function loadFromStorage() {
 
             const buttonsDiv = document.createElement('div');
             buttonsDiv.className = 'buttons';
+
+            const editButton = document.createElement('button');
+            editButton.className = 'edit';
+            editButton.textContent = "Edit";
+            editButton.onclick = () => {
+                var newName = prompt("New name?", item.name);
+                if (newName !== null) {
+                    listItem.getElementsByClassName("name")[0].textContent = newName;
+                    updateStorage();
+                }
+            };
+            buttonsDiv.appendChild(editButton);
 
             const deleteButton = document.createElement('button');
             deleteButton.className = 'delete';

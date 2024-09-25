@@ -44,7 +44,7 @@ li {
     margin-left: 10px;
 }
 
-.delete, .transfer {
+.delete, .transfer, .edit {
     margin-left: 10px;
     height: 25px;
 }
