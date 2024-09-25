@@ -12,17 +12,22 @@ function addItem(listId, inputId) {
 
         if (!itemExists) {
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<span>${timestamp}</span> ${itemName}`;
+            listItem.innerHTML = `<div class="item-info"><span class="date">${timestamp}</span>: <span class="name">${itemName}</span></div>`;
             
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'buttons';
+
             const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete';
             deleteButton.textContent = "Delete";
             deleteButton.onclick = () => {
                 list.removeChild(listItem);
                 updateStorage();
             };
-            listItem.appendChild(deleteButton);
+            buttonsDiv.appendChild(deleteButton);
 
             const transferButton = document.createElement('button');
+            transferButton.className = 'transfer';
             if (listId == 'shopping-list') {
                 transferButton.textContent = "Bought";
             }
@@ -30,13 +35,12 @@ function addItem(listId, inputId) {
                 transferButton.textContent = "Eaten";
             }
             transferButton.onclick = () => transferItem(listId, listItem);
-
-            listItem.appendChild(transferButton);
+            buttonsDiv.appendChild(transferButton);
             
-            list.appendChild(listItem);
+            listItem.appendChild(buttonsDiv);
+            list.insertBefore(listItem, list.firstChild);
             input.value = "";
 
-            // saveToStorage(listId, itemName, timestamp);
             updateStorage();
         } else {
             alert("Item already exists in the list.");
@@ -57,34 +61,31 @@ function transferItem(currentListId, listItem) {
         const currentList = document.getElementById(currentListId);
         const targetList = document.getElementById(targetListId);
 
-        const deleteButton = listItem.querySelector('button:nth-child(2)');
+        const deleteButton = listItem.getElementsByClassName('delete')[0];
         deleteButton.onclick = () => {
             listItem.parentNode.removeChild(listItem);
             updateStorage();
         };
 
         if (targetListId === "pantry-list") {
-            const transferButton = listItem.querySelector('button:nth-child(3)');
+            const transferButton = listItem.getElementsByClassName('transfer')[0];
             transferButton.textContent = "Eaten";
         } else {
-            listItem.querySelector('button:nth-child(3)').onclick = () => transferItem(targetListId, listItem);
+            listItem.getElementsByClassName('transfer')[0].onclick = () => transferItem(targetListId, listItem);
         }
 
         // Remove transfer button if moving to the Food Diary
         if (targetListId === "diary-list") {
-            const transferButton = listItem.querySelector('button:nth-child(3)');
+            const transferButton = listItem.getElementsByClassName('transfer')[0];
             transferButton.parentNode.removeChild(transferButton);
         } else {
-            listItem.querySelector('button:nth-child(3)').onclick = () => transferItem(targetListId, listItem);
+            listItem.getElementsByClassName('transfer')[0].onclick = () => transferItem(targetListId, listItem);
         }
 
         currentList.removeChild(listItem);
-        // targetList.appendChild(listItem);
         targetList.insertBefore(listItem, targetList.firstChild);
 
         updateStorage();
-        // removeFromStorage(currentListId, itemName);
-        // saveToStorage(targetListId, itemName, timestamp);
     }
 }
 
@@ -123,18 +124,23 @@ function loadFromStorage() {
         const list = document.getElementById(listId);
         items.forEach(item => {
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<span>${item.date}</span> ${item.name}`;
+            listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span>: <span class="name">${item.name}</span></div>`;
+
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.className = 'buttons';
 
             const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete';
             deleteButton.textContent = "Delete";
             deleteButton.onclick = () => {
                 list.removeChild(listItem);
                 updateStorage();
             };
-            listItem.appendChild(deleteButton);
+            buttonsDiv.appendChild(deleteButton);
 
             if (listId !== 'diary-list') {
                 const transferButton = document.createElement('button');
+                transferButton.className = 'transfer';
                 if (listId == 'shopping-list') {
                     transferButton.textContent = "Bought";
                 }
@@ -142,8 +148,10 @@ function loadFromStorage() {
                     transferButton.textContent = "Eaten";
                 }
                 transferButton.onclick = () => transferItem(listId, listItem);
-                listItem.appendChild(transferButton);
+                buttonsDiv.appendChild(transferButton);
             }
+            listItem.appendChild(buttonsDiv);
+
             list.appendChild(listItem);
         });
     });
@@ -167,8 +175,8 @@ function updateStorage() {
         const items = [];
         const list = document.getElementById(listId);
         list.childNodes.forEach(item => {
-            const date = item.querySelector('span').textContent;
-            const name = item.childNodes[1].textContent;
+            const date = item.getElementsByClassName('date')[0].textContent;
+            const name = item.getElementsByClassName('name')[0].textContent;
             items.push({ name, date });
         });
         localStorage.setItem(listId, JSON.stringify(items));
