@@ -6,41 +6,37 @@ function addItem(listId, inputId) {
         const timestamp = getTimestamp();
         const itemName = input.value;
 
-        if (!itemExists) {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `<div class="item-info"><span class="date">${timestamp}</span>: <span class="name">${itemName}</span></div>`;
-            
-            const buttonsDiv = document.createElement('div');
-            buttonsDiv.className = 'buttons';
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<div class="item-info"><span class="date">${timestamp}</span>: <span class="name">${itemName}</span></div>`;
+        
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.className = 'buttons';
 
-            const deleteButton = document.createElement('button');
-            deleteButton.className = 'delete';
-            deleteButton.textContent = "Delete";
-            deleteButton.onclick = () => {
-                list.removeChild(listItem);
-                updateStorage();
-            };
-            buttonsDiv.appendChild(deleteButton);
-
-            const transferButton = document.createElement('button');
-            transferButton.className = 'transfer';
-            if (listId == 'shopping-list') {
-                transferButton.textContent = "Bought";
-            }
-            else if (listId == 'pantry-list') {
-                transferButton.textContent = "Eaten";
-            }
-            transferButton.onclick = () => transferItem(listId, listItem);
-            buttonsDiv.appendChild(transferButton);
-            
-            listItem.appendChild(buttonsDiv);
-            list.insertBefore(listItem, list.firstChild);
-            input.value = "";
-
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete';
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = () => {
+            list.removeChild(listItem);
             updateStorage();
-        } else {
-            alert("Item already exists in the list.");
+        };
+        buttonsDiv.appendChild(deleteButton);
+
+        const transferButton = document.createElement('button');
+        transferButton.className = 'transfer';
+        if (listId == 'shopping-list') {
+            transferButton.textContent = "Bought";
         }
+        else if (listId == 'pantry-list') {
+            transferButton.textContent = "Eaten";
+        }
+        transferButton.onclick = () => transferItem(listId, listItem);
+        buttonsDiv.appendChild(transferButton);
+        
+        listItem.appendChild(buttonsDiv);
+        list.insertBefore(listItem, list.firstChild);
+        input.value = "";
+
+        updateStorage();
     }
 }
 
