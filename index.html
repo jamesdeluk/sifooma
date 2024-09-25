@@ -17,24 +17,30 @@
         <!-- Shopping List Column -->
         <div class="tab-content" id="shopping">
             <h2>Shopping List</h2>
-            <input type="text" id="shopping-input" placeholder="Add new item" />
-            <button onclick="addItem('shopping-list', 'shopping-input')">Add</button>
+            <div class="add-item-container">
+                <input type="text" id="shopping-input" class="add-item-input" placeholder="Add new item" />
+                <button onclick="addItem('shopping-list', 'shopping-input')" class="add-item-button">Add</button>
+            </div>
             <ul id="shopping-list"></ul>
         </div>
 
         <!-- Pantry Column -->
         <div class="tab-content" id="pantry">
             <h2>Pantry</h2>
-            <input type="text" id="pantry-input" placeholder="Add new item" />
-            <button onclick="addItem('pantry-list', 'pantry-input')">Add</button>
+            <div class="add-item-container">
+                <input type="text" id="pantry-input" class="add-item-input" placeholder="Add new item" />
+                <button onclick="addItem('pantry-list', 'pantry-input')" class="add-item-button">Add</button>
+            </div>
             <ul id="pantry-list"></ul>
         </div>
 
         <!-- Food Diary Column -->
         <div class="tab-content" id="diary">
             <h2>Food Diary</h2>
-            <input type="text" id="diary-input" placeholder="Add new item" />
-            <button onclick="addItem('diary-list', 'diary-input')">Add</button>
+            <div class="add-item-container">
+                <input type="text" id="diary-input" class="add-item-input" placeholder="Add new item" />
+                <button onclick="addItem('diary-list', 'diary-input')" class="add-item-button">Add</button>
+            </div>
             <ul id="diary-list"></ul>
         </div>
     </div>
