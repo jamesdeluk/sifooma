@@ -6,10 +6,6 @@ function addItem(listId, inputId) {
         const timestamp = getTimestamp();
         const itemName = input.value;
 
-        // Check if the item already exists in localStorage
-        const existingItems = JSON.parse(localStorage.getItem(listId)) || [];
-        const itemExists = existingItems.some(item => item.name === itemName);
-
         if (!itemExists) {
             const listItem = document.createElement('li');
             listItem.innerHTML = `<div class="item-info"><span class="date">${timestamp}</span>: <span class="name">${itemName}</span></div>`;
