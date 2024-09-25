@@ -3,11 +3,17 @@ function addItem(listId, inputId) {
     const list = document.getElementById(listId);
 
     if (input.value.trim() !== "") {
-        const timestamp = getTimestamp();
+        const date = getDate();
+        const time = getTime();
         const itemName = input.value;
 
         const listItem = document.createElement('li');
-        listItem.innerHTML = `<div class="item-info"><span class="date">${timestamp}</span>: <span class="name">${itemName}</span></div>`;
+        
+        if (listId === "diary-list") {
+            listItem.innerHTML = `<div class="item-info"><span class="date">${date} ${time}</span>: <span class="name">${itemName}</span></div>`;
+        } else {
+            listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span>: <span class="name">${itemName}</span></div>`;
+        }
         
         const buttonsDiv = document.createElement('div');
         buttonsDiv.className = 'buttons';
@@ -21,16 +27,18 @@ function addItem(listId, inputId) {
         };
         buttonsDiv.appendChild(deleteButton);
 
-        const transferButton = document.createElement('button');
-        transferButton.className = 'transfer';
-        if (listId == 'shopping-list') {
-            transferButton.textContent = "Bought";
+        if (listId !== "diary-list") {
+            const transferButton = document.createElement('button');
+            transferButton.className = 'transfer';
+            if (listId == 'shopping-list') {
+                transferButton.textContent = "Bought";
+            }
+            else if (listId == 'pantry-list') {
+                transferButton.textContent = "Eaten";
+            }
+            transferButton.onclick = () => transferItem(listId, listItem);
+            buttonsDiv.appendChild(transferButton);
         }
-        else if (listId == 'pantry-list') {
-            transferButton.textContent = "Eaten";
-        }
-        transferButton.onclick = () => transferItem(listId, listItem);
-        buttonsDiv.appendChild(transferButton);
         
         listItem.appendChild(buttonsDiv);
         list.insertBefore(listItem, list.firstChild);
@@ -52,6 +60,11 @@ function transferItem(currentListId, listItem) {
     if (targetListId) {
         const currentList = document.getElementById(currentListId);
         const targetList = document.getElementById(targetListId);
+
+        if (targetListId === "diary-list") {
+            const time = getTime();
+            listItem.getElementsByClassName("date")[0].textContent += " " + time;
+        }
 
         const deleteButton = listItem.getElementsByClassName('delete')[0];
         deleteButton.onclick = () => {
@@ -81,14 +94,18 @@ function transferItem(currentListId, listItem) {
     }
 }
 
-function getTimestamp() {
+function getDate() {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    // const hours = String(now.getHours()).padStart(2, '0');
-    // const minutes = String(now.getMinutes()).padStart(2, '0');
-    // return `${day}/${month} ${hours}:${minutes}`;
     return `${day}/${month}`;
+}
+
+function getTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
 }
 
 document.getElementById('shopping-input').addEventListener('keydown', function(e) {
@@ -149,9 +166,9 @@ function loadFromStorage() {
     });
 }
 
-// function saveToStorage(listId, itemName, timestamp) {
+// function saveToStorage(listId, itemName, date) {
 //     const items = JSON.parse(localStorage.getItem(listId)) || [];
-//     items.push({ name: itemName, date: timestamp });
+//     items.push({ name: itemName, date: date });
 //     localStorage.setItem(listId, JSON.stringify(items));
 // }
 
