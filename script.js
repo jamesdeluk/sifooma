@@ -5,7 +5,8 @@ function addItem(listId, inputId) {
     if (input.value.trim() !== "") {
         const date = getDate();
         const time = getTime();
-        let itemName = input.value;
+        let itemName = input.value.trim();
+        itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1).toLowerCase();
 
         const listItem = document.createElement('li');
         
