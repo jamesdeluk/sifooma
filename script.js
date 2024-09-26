@@ -12,8 +12,10 @@ function addItem(listId, inputId) {
         
         if (listId === "diary-list") {
             listItem.innerHTML = `<div class="item-info"><span class="date">${date} ${time}</span>: <span class="name">${itemName}</span></div>`;
-        } else {
+        } else if (listId === "pantry-list"){
             listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span>: <span class="name">${itemName}</span></div>`;
+        } else if (listId === "shopping-list"){
+            listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="name">${itemName}</span></div>`;
         }
         
         const buttonsDiv = document.createElement('div');
@@ -74,6 +76,9 @@ function transferItem(currentListId, listItem) {
         if (targetListId === "diary-list") {
             const time = getTime();
             listItem.getElementsByClassName("date")[0].textContent += " " + time;
+        } else if (targetListId === "pantry-list") {
+            const date = getDate();
+            listItem.getElementsByClassName("date")[0].textContent = date;
         }
 
         const deleteButton = listItem.getElementsByClassName('delete')[0];
@@ -109,6 +114,9 @@ function transferItem(currentListId, listItem) {
         }
 
         currentList.removeChild(listItem);
+        if (targetListId === "pantry-list") {
+            listItem.innerHTML = listItem.innerHTML.slice(0, 54) + ": " + listItem.innerHTML.slice(54); // Ensure ": " appears in Pantry list
+        }
         targetList.insertBefore(listItem, targetList.firstChild);
 
         updateStorage();
@@ -154,7 +162,11 @@ function loadFromStorage() {
         const list = document.getElementById(listId);
         items.forEach(item => {
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span>: <span class="name">${item.name}</span></div>`;
+            if (listId === "shopping-list"){
+                listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="name">${item.name}</span></div>`;
+            } else {
+                listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span>: <span class="name">${item.name}</span></div>`;
+            }
 
             const buttonsDiv = document.createElement('div');
             buttonsDiv.className = 'buttons';
