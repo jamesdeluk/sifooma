@@ -20,7 +20,7 @@ function addItem(listId, inputId) {
 
         const editButton = document.createElement('button');
         editButton.className = 'edit';
-        editButton.textContent = "Edit";
+        editButton.textContent = "✒️";
         editButton.onclick = () => {
             var newName = prompt("New name?", itemName)
             if (newName !== null) {
@@ -32,7 +32,7 @@ function addItem(listId, inputId) {
 
         const deleteButton = document.createElement('button');
         deleteButton.className = 'delete';
-        deleteButton.textContent = "Delete";
+        deleteButton.textContent = "❌";
         deleteButton.onclick = () => {
             if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
                 list.removeChild(listItem);
@@ -44,12 +44,7 @@ function addItem(listId, inputId) {
         if (listId !== "diary-list") {
             const transferButton = document.createElement('button');
             transferButton.className = 'transfer';
-            if (listId == 'shopping-list') {
-                transferButton.textContent = "Bought";
-            }
-            else if (listId == 'pantry-list') {
-                transferButton.textContent = "Eaten";
-            }
+            transferButton.textContent = "➡️";
             transferButton.onclick = () => transferItem(listId, listItem);
             buttonsDiv.appendChild(transferButton);
         }
@@ -99,7 +94,7 @@ function transferItem(currentListId, listItem) {
 
         if (targetListId === "pantry-list") {
             const transferButton = listItem.getElementsByClassName('transfer')[0];
-            transferButton.textContent = "Eaten";
+            transferButton.textContent = "➡️";
         } else {
             listItem.getElementsByClassName('transfer')[0].onclick = () => transferItem(targetListId, listItem);
         }
@@ -165,7 +160,7 @@ function loadFromStorage() {
 
             const editButton = document.createElement('button');
             editButton.className = 'edit';
-            editButton.textContent = "Edit";
+            editButton.textContent = "✒️";
             editButton.onclick = () => {
                 var newName = prompt("New name?", item.name);
                 if (newName !== null) {
@@ -177,7 +172,7 @@ function loadFromStorage() {
 
             const deleteButton = document.createElement('button');
             deleteButton.className = 'delete';
-            deleteButton.textContent = "Delete";
+            deleteButton.textContent = "❌";
             deleteButton.onclick = () => {
                 if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
                     list.removeChild(listItem);
@@ -189,12 +184,7 @@ function loadFromStorage() {
             if (listId !== 'diary-list') {
                 const transferButton = document.createElement('button');
                 transferButton.className = 'transfer';
-                if (listId == 'shopping-list') {
-                    transferButton.textContent = "Bought";
-                }
-                else if (listId == 'pantry-list') {
-                    transferButton.textContent = "Eaten";
-                }
+                transferButton.textContent = "➡️";
                 transferButton.onclick = () => transferItem(listId, listItem);
                 buttonsDiv.appendChild(transferButton);
             }
