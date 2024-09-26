@@ -98,13 +98,6 @@ function transferItem(currentListId, listItem) {
             }
         };
 
-        if (targetListId === "pantry-list") {
-            const transferButton = listItem.getElementsByClassName('transfer')[0];
-            transferButton.textContent = "➡️";
-        } else {
-            listItem.getElementsByClassName('transfer')[0].onclick = () => transferItem(targetListId, listItem);
-        }
-
         // Remove transfer button if moving to the Food Diary
         if (targetListId === "diary-list") {
             const transferButton = listItem.getElementsByClassName('transfer')[0];
