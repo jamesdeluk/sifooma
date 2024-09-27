@@ -130,10 +130,6 @@ footer a:hover {
         display: none;
     }
 
-    .tab-content:first-of-type {
-        display: block;
-    }
-
     .tab-content {
         width: 100%;
     }

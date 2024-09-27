@@ -283,7 +283,13 @@ window.onload = loadFromStorage;
 function openTab(tabName) {
     const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => {
-        tab.style.display = 'none'; // Hide all tabs
+        tab.style.display = 'none';
     });
-    document.getElementById(tabName).style.display = 'block'; // Show the selected tab
+    document.getElementById(tabName).style.display = 'block';
+    localStorage.setItem('activeTab', tabName);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const activeTab = localStorage.getItem('activeTab') || 'shopping';
+    openTab(activeTab);
+});
