@@ -21,6 +21,20 @@ function addItem(listId, inputId) {
         const buttonsDiv = document.createElement('div');
         buttonsDiv.className = 'buttons';
 
+        if (listId === "shopping-list") {
+            const moveUpButton = document.createElement('button');
+            moveUpButton.className = 'move-up';
+            moveUpButton.textContent = "⬆️";
+            moveUpButton.onclick = () => moveItem(listId, listItem, 'up');
+            buttonsDiv.appendChild(moveUpButton);
+
+            const moveDownButton = document.createElement('button');
+            moveDownButton.className = 'move-down';
+            moveDownButton.textContent = "⬇️";
+            moveDownButton.onclick = () => moveItem(listId, listItem, 'down');
+            buttonsDiv.appendChild(moveDownButton);
+        }
+
         const editButton = document.createElement('button');
         editButton.className = 'edit';
         editButton.textContent = "✒️";
@@ -167,6 +181,20 @@ function loadFromStorage() {
             const buttonsDiv = document.createElement('div');
             buttonsDiv.className = 'buttons';
 
+            if (listId === "shopping-list") {
+                const moveUpButton = document.createElement('button');
+                moveUpButton.className = 'move-up';
+                moveUpButton.textContent = "⬆️";
+                moveUpButton.onclick = () => moveItem(listId, listItem, 'up');
+                buttonsDiv.appendChild(moveUpButton);
+    
+                const moveDownButton = document.createElement('button');
+                moveDownButton.className = 'move-down';
+                moveDownButton.textContent = "⬇️";
+                moveDownButton.onclick = () => moveItem(listId, listItem, 'down');
+                buttonsDiv.appendChild(moveDownButton);
+            }
+
             const editButton = document.createElement('button');
             editButton.className = 'edit';
             editButton.textContent = "✒️";
@@ -202,6 +230,20 @@ function loadFromStorage() {
             list.appendChild(listItem);
         });
     });
+}
+
+function moveItem(listId, listItem, direction) {
+    const list = document.getElementById(listId);
+    const items = Array.from(list.children);
+    const index = items.indexOf(listItem);
+
+    if (direction === 'up' && index > 0) {
+        list.insertBefore(listItem, items[index - 1]);
+    } else if (direction === 'down' && index < items.length - 1) {
+        list.insertBefore(listItem, items[index + 1].nextSibling);
+    }
+
+    updateStorage();
 }
 
 // function saveToStorage(listId, itemName, date) {

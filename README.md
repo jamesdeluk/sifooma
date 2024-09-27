@@ -8,9 +8,9 @@ Shopping list, pantry, and food log, all in one.
 
 ## To do
 
-- [ ] Ability to reorder list items
 - [ ] Undo delete/transfer
 - [ ] Quantities
 - [ ] Grouped dates in Food Diary
 - [ ] Sync / online storage
 - [ ] Nutrition info
+- [ ] Fix mysterious space between time and colon on food diary on mobile
