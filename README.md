@@ -8,7 +8,6 @@ Shopping list, pantry, and food log, all in one.
 
 ## To do
 
-- [ ] Backup/restore
 - [ ] Ability to reorder list items
 - [ ] Undo delete/transfer
 - [ ] Quantities
