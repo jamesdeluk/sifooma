@@ -9,7 +9,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Sifooma</h1>
+        <header>
+            <h1>Sifooma</h1>
+            <div class="backup-restore">
+                <button onclick="backupToFile()" class="backup-button">📤</button>
+                <input type="file" id="restore-input" class="restore-input" style="display:none;" />
+                <button onclick="document.getElementById('restore-input').click();" class="restore-button">📥</button>
+            </div>
+        </header>
         <div class="tabs">
             <button class="tab-button" onclick="openTab('shopping')">Shopping List</button>
             <button class="tab-button" onclick="openTab('pantry')">Pantry</button>

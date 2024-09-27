@@ -8,8 +8,31 @@ body {
     min-height: 98vh;
 }
 
+
+header {
+    display: flex;
+}
+
 h1 {
     text-align: center;
+    flex: 1;
+}
+
+.backup-restore {
+    display: flex;
+}
+
+.backup-button, .restore-button {
+    height: 30px;
+    margin: auto;
+}
+
+.backup-button {
+    margin-right: 7px;
+}
+
+.restore-button {
+    margin-right: 20px;
 }
 
 .tabs {
@@ -117,5 +140,9 @@ footer a:hover {
 
     input {
         width: 80%;
+    }
+
+    .restore-button {
+        margin-right: 0px;
     }
 }

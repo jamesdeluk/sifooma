@@ -227,4 +227,51 @@ function updateStorage() {
     });
 }
 
+function backupToFile() {
+    const lists = ['shopping-list', 'pantry-list', 'diary-list'];
+    const data = {};
+
+    lists.forEach(listId => {
+        const items = JSON.parse(localStorage.getItem(listId)) || [];
+        data[listId] = items;
+    });
+
+    const timestamp = new Date();
+    const formattedTimestamp = `${timestamp.getFullYear().toString().slice(2)}${String(timestamp.getMonth() + 1).padStart(2, '0')}${String(timestamp.getDate()).padStart(2, '0')}${String(timestamp.getHours()).padStart(2, '0')}${String(timestamp.getMinutes()).padStart(2, '0')}`;
+    const filename = `sifooma-backup-${formattedTimestamp}.json`;
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename; // Use the formatted filename
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function restoreFromFile(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const data = JSON.parse(e.target.result);
+            const lists = ['shopping-list', 'pantry-list', 'diary-list'];
+            lists.forEach(listId => {
+                const list = document.getElementById(listId);
+                list.innerHTML = ''; // Clear existing items
+                data[listId].forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<div class="item-info"><span class="date">${item.date || ''}</span>: <span class="name">${item.name}</span></div>`;
+                    list.appendChild(listItem);
+                });
+            });
+            updateStorage(); // Update local storage after restoring
+            location.reload(); // Force a page reload to reset the UI
+        };
+        reader.readAsText(file);
+    }
+}
+
+document.getElementById('restore-input').addEventListener('change', restoreFromFile);
+
 window.onload = loadFromStorage;
