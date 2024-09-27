@@ -11,11 +11,11 @@ function addItem(listId, inputId) {
         const listItem = document.createElement('li');
         
         if (listId === "diary-list") {
-            listItem.innerHTML = `<div class="item-info"><span class="date">${date} ${time}</span>: <span class="name">${itemName}</span></div>`;
+            listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span> <span class="time">${time}</span>: <span class="name">${itemName}</span></div>`;
         } else if (listId === "pantry-list"){
-            listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span>: <span class="name">${itemName}</span></div>`;
+            listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span><span class="time"></span>: <span class="name">${itemName}</span></div>`;
         } else if (listId === "shopping-list"){
-            listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="name">${itemName}</span></div>`;
+            listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="time"></span><span class="name">${itemName}</span></div>`;
         }
         
         const buttonsDiv = document.createElement('div');
@@ -74,8 +74,10 @@ function transferItem(currentListId, listItem) {
         const targetList = document.getElementById(targetListId);
 
         if (targetListId === "diary-list") {
+            const date = getDate();
+            listItem.getElementsByClassName("date")[0].textContent = date;
             const time = getTime();
-            listItem.getElementsByClassName("date")[0].textContent += " " + time;
+            listItem.getElementsByClassName("time")[0].textContent = time;
         } else if (targetListId === "pantry-list") {
             const date = getDate();
             listItem.getElementsByClassName("date")[0].textContent = date;
@@ -107,12 +109,10 @@ function transferItem(currentListId, listItem) {
         }
 
         currentList.removeChild(listItem);
-        if (targetListId === "pantry-list") {
-            listItem.innerHTML = listItem.innerHTML.slice(0, 54) + ": " + listItem.innerHTML.slice(54); // Ensure ": " appears in Pantry list
-        }
         targetList.insertBefore(listItem, targetList.firstChild);
 
         updateStorage();
+        location.reload();
     }
 }
 
@@ -155,10 +155,13 @@ function loadFromStorage() {
         const list = document.getElementById(listId);
         items.forEach(item => {
             const listItem = document.createElement('li');
-            if (listId === "shopping-list"){
-                listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="name">${item.name}</span></div>`;
-            } else {
-                listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span>: <span class="name">${item.name}</span></div>`;
+
+            if (listId === "diary-list") {
+                listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span> <span class="time">${item.time}</span>: <span class="name">${item.name}</span></div>`;
+            } else if (listId === "pantry-list"){
+                listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span><span class="time"></span>: <span class="name">${item.name}</span></div>`;
+            } else if (listId === "shopping-list"){
+                listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="time"></span><span class="name">${item.name}</span></div>`;
             }
 
             const buttonsDiv = document.createElement('div');
@@ -220,8 +223,9 @@ function updateStorage() {
         const list = document.getElementById(listId);
         list.childNodes.forEach(item => {
             const date = item.getElementsByClassName('date')[0].textContent;
+            const time = item.getElementsByClassName('time')[0].textContent;
             const name = item.getElementsByClassName('name')[0].textContent;
-            items.push({ name, date });
+            items.push({ name, date, time });
         });
         localStorage.setItem(listId, JSON.stringify(items));
     });
@@ -261,7 +265,7 @@ function restoreFromFile(event) {
                 list.innerHTML = ''; // Clear existing items
                 data[listId].forEach(item => {
                     const listItem = document.createElement('li');
-                    listItem.innerHTML = `<div class="item-info"><span class="date">${item.date || ''}</span>: <span class="name">${item.name}</span></div>`;
+                    listItem.innerHTML = `<div class="item-info"><span class="date">${item.date || ''}</span> <span class="time">${item.time || ''}</span>: <span class="name">${item.name}</span></div>`;
                     list.appendChild(listItem);
                 });
             });
