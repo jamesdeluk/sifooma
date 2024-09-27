@@ -279,3 +279,11 @@ function restoreFromFile(event) {
 document.getElementById('restore-input').addEventListener('change', restoreFromFile);
 
 window.onload = loadFromStorage;
+
+function openTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.style.display = 'none'; // Hide all tabs
+    });
+    document.getElementById(tabName).style.display = 'block'; // Show the selected tab
+}
