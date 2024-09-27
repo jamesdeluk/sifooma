@@ -290,6 +290,14 @@ function openTab(tabName) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const activeTab = localStorage.getItem('activeTab') || 'shopping';
-    openTab(activeTab);
+    if (window.innerWidth <= 768) { // Check if the viewport width is 768px or less
+        const activeTab = localStorage.getItem('activeTab') || 'shopping';
+        openTab(activeTab);
+    } else {
+        // Show all tabs if not on mobile
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.style.display = 'block';
+        });
+    }
 });
