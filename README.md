@@ -9,8 +9,10 @@ Shopping list, pantry, and food log, all in one.
 ## To do
 
 - [ ] Undo delete/transfer
-- [ ] Quantities
+- [ ] Update data structure to have item as top level (shopping: item / pantry: item > quantity > dates / food: date (title) > item > time > quantity
 - [ ] Grouped dates in Food Diary
+- [ ] Quantities
 - [ ] Sync / online storage
 - [ ] Nutrition info
 - [ ] Fix mysterious space between time and colon on food diary on mobile
+- [ ] Create mobile apps using webapp as MVP
