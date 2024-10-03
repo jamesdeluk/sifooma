@@ -67,7 +67,11 @@ function addItem(listId, inputId) {
         }
         
         listItem.appendChild(buttonsDiv);
-        list.insertBefore(listItem, list.firstChild);
+        if (listId === "pantry-list") {
+            list.appendChild(listItem);
+        } else {
+            list.insertBefore(listItem, list.firstChild);
+        }
         input.value = "";
 
         updateStorage();
@@ -123,7 +127,11 @@ function transferItem(currentListId, listItem) {
         }
 
         currentList.removeChild(listItem);
-        targetList.insertBefore(listItem, targetList.firstChild);
+        if (targetListId === "pantry-list") {
+            targetList.appendChild(listItem);
+        } else {
+            targetList.insertBefore(listItem, targetList.firstChild);
+        }
 
         updateStorage();
         location.reload();
