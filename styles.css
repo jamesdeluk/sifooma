@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 2%;
+    margin: 0;
 }
 
 .container {
@@ -15,8 +15,7 @@ header {
     position: fixed;
     top: 0;
     z-index: 9999;
-    width: 94vw;
-    margin: 0 1%;
+    width: 100%;
     background: white;
     border-bottom: 1px solid grey;
 }
@@ -50,14 +49,14 @@ h1 {
 
 .links {
     display: none;
-    background-color: #e9e9ed;
 }
 
 .lists-container {
     display: flex;
     justify-content: space-around;
     flex: 1;
-    margin-top: 50px;
+    margin-top: 78px;
+    background-color: cornsilk;
 }
 
 .list-content {
@@ -68,7 +67,11 @@ h1 {
     padding: 10px;
     border: 1px solid grey;
     border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     scroll-margin-top: 75px;
+    background-color: white;
+    margin-bottom: 20px;
 }
 
 h2 {
@@ -116,7 +119,6 @@ li {
 
 footer {
     text-align: center;
-    margin-top: 20px;
     padding: 10px;
     border-top: 1px solid #ccc;
 }
@@ -131,17 +133,12 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-    header {
-        width: 96%;
-        margin: 0;
-    }
-
     h1 {
-        margin: 0;
+        margin: 2px 0;
     }    
 
     .restore-button {
-        margin-right: 0px;
+        margin-right: 7px;
     }
 
     .links {
@@ -151,16 +148,22 @@ a:hover {
     }
     
     .link {
-        width: 30%;
+        width: 25%;
+        padding: 5px;
         text-align: center;
+        background-color: #e9e9ed;
         border: 1px solid grey;
         border-radius: 5px;
-        padding: 5px;
     }
 
     .lists-container {
         display: block;
         margin-top: 75px;
+    }
+
+    #pantry, #diary {
+        border-top-left-radius: 5;
+        border-top-right-radius: 5;
     }
     
     .list-content {
