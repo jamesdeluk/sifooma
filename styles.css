@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 2%;
 }
 
 .container {
@@ -8,14 +9,26 @@ body {
     min-height: 98vh;
 }
 
-
 header {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    width: 94vw;
+    margin: 0 1%;
+    background: white;
+    border-bottom: 1px solid grey;
+}
+
+.top {
     display: flex;
 }
 
 h1 {
     text-align: center;
     flex: 1;
+    margin-top: 20px;
 }
 
 .backup-restore {
@@ -35,17 +48,19 @@ h1 {
     margin-right: 20px;
 }
 
-.tabs {
-    display: none; /* Hide tabs by default */
+.links {
+    display: none;
+    background-color: #e9e9ed;
 }
 
-.tab-container {
+.lists-container {
     display: flex;
     justify-content: space-around;
     flex: 1;
+    margin-top: 50px;
 }
 
-.tab-content {
+.list-content {
     display: inline-block;
     width: 30%;
     height: 100%;
@@ -53,6 +68,7 @@ h1 {
     padding: 10px;
     border: 1px solid grey;
     border-radius: 5px;
+    scroll-margin-top: 75px;
 }
 
 h2 {
@@ -105,40 +121,55 @@ footer {
     border-top: 1px solid #ccc;
 }
 
-footer a {
+a {
     text-decoration: none;
     color: #000;
 }
 
-footer a:hover {
+a:hover {
     text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-    .tabs {
-        display: flex; /* Show tabs on mobile */
-        justify-content: space-between;
-        margin-bottom: 20px;
+    header {
+        width: 96%;
+        margin: 0;
     }
 
-    .tab-button {
+    h1 {
+        margin: 0;
+    }    
+
+    .restore-button {
+        margin-right: 0px;
+    }
+
+    .links {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 5px;
+    }
+    
+    .link {
         width: 30%;
-        height: 30px;
+        text-align: center;
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 5px;
     }
 
-    .tab-content {
-        display: none;
+    .lists-container {
+        display: block;
+        margin-top: 75px;
     }
-
-    .tab-content {
-        width: 100%;
+    
+    .list-content {
+        display: block;
+        width: auto;
+        margin-bottom: 10px;
     }
 
     input {
         width: 80%;
-    }
-
-    .restore-button {
-        margin-right: 0px;
     }
 }
