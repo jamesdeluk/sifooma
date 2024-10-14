@@ -135,7 +135,11 @@ a:hover {
 @media (max-width: 768px) {
     h1 {
         margin: 2px 0;
-    }    
+    }
+
+    h2 {
+        margin: 5px 0 15px 0;
+    }
 
     .restore-button {
         margin-right: 7px;
