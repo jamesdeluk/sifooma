@@ -15,4 +15,3 @@ Shopping list, pantry, and food log, all in one.
 - [ ] Sync / online storage
 - [ ] Nutrition info
 - [ ] Fix mysterious space between time and colon on food diary on mobile
-- [ ] Minimum width for buttons to avoid multi-lining
