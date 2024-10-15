@@ -12,14 +12,14 @@ function addItem(listId, inputId) {
         
         if (listId === "diary-list") {
             listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span> <span class="time">${time}</span>: <span class="name">${itemName}</span></div>`;
-        } else if (listId === "pantry-list"){
+        } else if (listId === "pantry-list") {
             listItem.innerHTML = `<div class="item-info"><span class="date">${date}</span><span class="time"></span>: <span class="name">${itemName}</span></div>`;
-        } else if (listId === "shopping-list"){
+        } else if (listId === "shopping-list") {
             listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="time"></span><span class="name">${itemName}</span></div>`;
         }
         
         const buttonsDiv = document.createElement('div');
-        buttonsDiv.className = 'buttons';
+        buttonsDiv.className = `buttons ${listId.split('-')[0]}-buttons`;
 
         if (listId === "shopping-list") {
             const moveUpButton = document.createElement('button');
@@ -39,7 +39,7 @@ function addItem(listId, inputId) {
         editButton.className = 'edit';
         editButton.textContent = "✒️";
         editButton.onclick = () => {
-            var newName = prompt("New name?", itemName)
+            var newName = prompt("New name?", itemName);
             if (newName !== null) {
                 listItem.getElementsByClassName("name")[0].textContent = newName;
                 updateStorage();
@@ -103,7 +103,7 @@ function transferItem(currentListId, listItem) {
 
         const deleteButton = listItem.getElementsByClassName('delete')[0];
         deleteButton.onclick = () => {
-            if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
+            if (confirm("Are you sure you want to delete this item?")) {
                 listItem.parentNode.removeChild(listItem);
                 updateStorage();
             }
@@ -180,14 +180,14 @@ function loadFromStorage() {
 
             if (listId === "diary-list") {
                 listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span> <span class="time">${item.time}</span>: <span class="name">${item.name}</span></div>`;
-            } else if (listId === "pantry-list"){
+            } else if (listId === "pantry-list") {
                 listItem.innerHTML = `<div class="item-info"><span class="date">${item.date}</span><span class="time"></span>: <span class="name">${item.name}</span></div>`;
-            } else if (listId === "shopping-list"){
+            } else if (listId === "shopping-list") {
                 listItem.innerHTML = `<div class="item-info"><span class="date"></span><span class="time"></span><span class="name">${item.name}</span></div>`;
             }
 
             const buttonsDiv = document.createElement('div');
-            buttonsDiv.className = 'buttons';
+            buttonsDiv.className = `buttons ${listId.split('-')[0]}-buttons`;
 
             if (listId === "shopping-list") {
                 const moveUpButton = document.createElement('button');
@@ -219,7 +219,7 @@ function loadFromStorage() {
             deleteButton.className = 'delete';
             deleteButton.textContent = "❌";
             deleteButton.onclick = () => {
-                if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
+                if (confirm("Are you sure you want to delete this item?")) {
                     list.removeChild(listItem);
                     updateStorage();
                 }

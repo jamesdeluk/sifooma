@@ -117,8 +117,14 @@ li {
     width: 27px;
 }
 
-.buttons {
+.shopping-buttons {
     min-width: 170px;
+}
+.pantry-buttons {
+    min-width: 105px;
+}
+.diary-buttons {
+    min-width: 70px;
 }
 
 footer {
