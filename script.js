@@ -157,18 +157,27 @@ function getTime() {
 document.getElementById('shopping-input').addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 'Enter') {
         addItem('shopping-list', 'shopping-input');
+    } else if (e.key === 'Enter') {
+        addItem('shopping-list', 'shopping-input');
+        e.preventDefault();
     }
 });
 
 document.getElementById('pantry-input').addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 'Enter') {
         addItem('pantry-list', 'pantry-input');
+    } else if (e.key === 'Enter') {
+        addItem('pantry-list', 'pantry-input');
+        e.preventDefault();
     }
 });
 
 document.getElementById('diary-input').addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 'Enter') {
         addItem('diary-list', 'diary-input');
+    } else if (e.key === 'Enter') {
+        addItem('diary-list', 'diary-input');
+        e.preventDefault();
     }
 });
 
