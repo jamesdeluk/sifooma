@@ -51,7 +51,8 @@ function addItem(listId, inputId) {
         deleteButton.className = 'delete';
         deleteButton.textContent = "❌";
         deleteButton.onclick = () => {
-            if (confirm("Are you sure you want to delete this item?")) { // Confirmation popup
+            const itemName = listItem.getElementsByClassName("name")[0].textContent;
+            if (confirm(`Are you sure you want to delete ${itemName}?`)) { // Confirmation popup
                 list.removeChild(listItem);
                 updateStorage();
             }
@@ -103,8 +104,9 @@ function transferItem(currentListId, listItem) {
 
         const deleteButton = listItem.getElementsByClassName('delete')[0];
         deleteButton.onclick = () => {
-            if (confirm("Are you sure you want to delete this item?")) {
-                listItem.parentNode.removeChild(listItem);
+            const itemName = listItem.getElementsByClassName("name")[0].textContent;
+            if (confirm(`Are you sure you want to delete ${itemName}?`)) { // Confirmation popup
+                list.removeChild(listItem);
                 updateStorage();
             }
         };
@@ -219,7 +221,8 @@ function loadFromStorage() {
             deleteButton.className = 'delete';
             deleteButton.textContent = "❌";
             deleteButton.onclick = () => {
-                if (confirm("Are you sure you want to delete this item?")) {
+                const itemName = listItem.getElementsByClassName("name")[0].textContent;
+                if (confirm(`Are you sure you want to delete ${itemName}?`)) { // Confirmation popup
                     list.removeChild(listItem);
                     updateStorage();
                 }
